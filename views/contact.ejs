@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="\images\cropped-logo-1.png">
+    <link rel="stylesheet" href="/js-pages/new-style.css">
+    <meta property="og:image" content="/images/cropped-logo-1.png" alt="Jaspinder Singh" />
+    <title>Contact | Jaspinder Singh</title>
+</head>
+<style>
+    /* Contact Us */
+    .contact.main-container {
+        display: flex;
+        height: inherit;
+        margin: auto 100px;
+        justify-content: center;
+    }
+
+    .contact.main-container .info-row {
+        display: flex;
+        gap: 40px;
+        justify-content: center;
+        margin: auto;
+    }
+
+    .contact.main-container .info-row .info .h1 {
+        color: #fff;
+        font-family: Orbitron;
+        font-size: 64px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        margin-bottom: 20px;
+        max-width: 500px;
+    }
+
+    .contact.main-container .info-row .info .data-info {
+        display: flex;
+        gap: 20px;
+        vertical-align: middle;
+    }
+
+    .contact.main-container .info-row .info .data-info .img {
+        margin: auto 0px;
+        overflow: hidden;
+        background-color: #fff;
+        border-radius: 1000px;
+        width: 80px;
+        height: 80px;
+        position: relative;
+        border: 5px solid var(--color-hex);
+        filter: grayscale(1);
+    }
+
+    .contact.main-container .info-row .info .data-info .img img {
+        width: 100px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -40%);
+    }
+
+    .contact.main-container .info-row .info .data-info .info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .contact.main-container .info-row .info .data-info .info .name_ {
+        color: var(--color-hex);
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .contact.main-container .info-row .info .data-info .info .email {
+        color: #fff;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 400;
+        text-decoration: none;
+    }
+
+    .contact.main-container .info-row .form {
+        border-radius: 50px;
+        background: rgba(255, 255, 255, 0.10);
+        backdrop-filter: blur(2px);
+    }
+
+    .contact.main-container .info-row .form .from-body {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    input:not([type="submit"], .kc_captcha input),
+    textarea {
+        font-family: 'Orbitron', sans-serif;
+        width: 300px;
+        padding: 6px 10px;
+        height: 30px;
+        border-radius: 112px;
+        background: rgba(225, 225, 225, 0.50);
+        margin: 5px 0px;
+        border: none !important;
+        outline: none;
+        color: var(--bg-hex);
+        font-weight: 600;
+        font-size: 18px;
+    }
+
+    input:not([type="submit"])::placeholder,
+    textarea::placeholder {
+        color: #fff;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    textarea {
+        height: 180px;
+        border-radius: 20px;
+        resize: none;
+    }
+
+    input[type="submit"] {
+        cursor: pointer;
+        width: fit-content;
+        border: none !important;
+        padding: 10px 60px;
+        border-radius: 150px !important;
+        background: var(--color-hex);
+        color: var(--bg-hex);
+        margin: auto;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: normal;
+        font-family: 'Orbitron', sans-serif;
+    }
+
+    input, textarea{
+        width: -webkit-fill-available !important;
+    }
+
+    .wpcf7-form {
+        width: min-content;
+    }
+
+    .wpcf7-form p {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0px;
+        width: min-content;
+    }
+
+    .wpcf7-spinner {
+        display: none;
+    }
+
+    .screen-reader-response {
+        display: none !important;
+    }
+
+    .wpcf7-form-control-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: fit-content;
+    }
+
+    .wpcf7-not-valid-tip,
+    .wpcf7-response-output {
+        font-size: 12px;
+        color: #ffffff;
+        text-align: center;
+    }
+
+    .wpcf7-response-output {
+        margin-top: 5px;
+    }
+
+    .hidden-fields-container {
+        display: none !important;
+    }
+
+    @media (max-width: 1280px) {
+
+        .contact.main-container .info-row .info .h1 {
+            margin-bottom: revert;
+        }
+    }
+
+    @media (max-width:1137px) {
+        .contact.main-container .info-row {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact.main-container .info-row .info .h1 {
+            font-size: 32px;
+            max-width: 70%;
+            text-align: center;
+            margin: 40px auto 20px auto;
+        }
+
+        .contact.main-container .info-row .info .data-info {
+            justify-content: center;
+        }
+
+        .contact.main-container .info-row .info .data-info .info .name_ {
+            font-size: 20px;
+        }
+
+        .contact.main-container .info-row .info .data-info .info .email {
+            font-size: 14px;
+        }
+
+        .contact.main-container {
+            overflow-y: scroll;
+            max-height: calc(100vh - (160px + 60px));
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .contact-scroll {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        input:not([type="submit"])::placeholder,
+        textarea::placeholder {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 400;
+        }
+    }
+
+    @media (max-width:880px) {
+        .contact.main-container .info-row .info .h1 {
+            max-width: 90%;
+        }
+    }
+
+    @media (max-width: 585px) {
+
+        input:not([type="submit"]),
+        textarea {
+            width: auto;
+            padding: 5px 10px;
+            height: 25px;
+            border-radius: 52px;
+            font-size: 14px;
+        }
+
+        input:not([type="submit"]),
+        textarea {
+            max-width: 250px;
+        }
+
+        textarea {
+            height: 150px;
+            border-radius: 20px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 60px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    }
+
+    @media (max-width: 490px) {
+        .contact.main-container .info-row .info .h1 {
+            font-size: 24px;
+            max-width: 100%;
+            text-align: center;
+            margin: 20px 0px 10px 0px;
+        }
+
+        .contact.main-container .info-row .info .data-info .info .email {
+            font-size: 12px;
+        }
+
+        .contact.main-container .info-row .info .data-info .img {
+            width: 60px;
+            height: 60px;
+        }
+
+        .contact.main-container .info-row .info .data-info {
+            gap: 5px;
+        }
+
+        .contact.main-container .info-row .form {
+            border-radius: 20px;
+        }
+    }
+
+    .captcha-image {
+        border: none !important;
+        padding: 10px 10px !important;
+        text-align: start !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: stretch !important;
+        align-content: center !important;
+        flex-wrap: nowrap !important;
+    }
+
+    .cf7ic_instructions {
+        display: block !important;
+        font-size: 12px !important;
+
+        & span {
+            font-size: 14px !important;
+            color: var(--color-hex) !important;
+            text-transform: capitalize !important;
+        }
+    }
+
+    .captcha-image label {
+        width: auto !important;
+    }
+
+    .captcha-image svg {
+        width: 30px !important;
+        height: 30px !important;
+        padding: 0px !important;
+        margin: 0px auto !important;
+    }
+
+    .captcha-image label>input:checked+svg,
+    .captcha-image label>input:focus+svg {
+        border: none !important;
+        color: var(--color-hex) !important;
+    }
+</style>
+
+<body>
+    <div class="colorization">
+        <div class="color-1" onclick="colorization(0)"></div>
+        <div class="color-2" onclick="colorization(1)"></div>
+        <div class="color-3" onclick="colorization(2)"></div>
+        <div class="color-4" onclick="colorization(3)"></div>
+    </div>
+    <div class="mouse_follower"></div>
+    <div class="main-menu" id="nav-pop">
+        <a href="/" class="home_">Home</a>
+        <a href="/projects" class="projects_">Projects</a>
+        <a href="/about" class="about_">About</a>
+        <a href="/contact" class="contact_ active">Contact</a>
+        <div class="colorization">
+            <div class="color-1" onclick="colorization(0)"></div>
+            <div class="color-2" onclick="colorization(1)"></div>
+            <div class="color-3" onclick="colorization(2)"></div>
+            <div class="color-4" onclick="colorization(3)"></div>
+        </div>
+    </div>
+    <a href="#0" class="close-nav"></a>
+    <a href="#nav-pop">
+        <svg class="mob-nav" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="60" height="60" rx="30" fill="#444444" fill-opacity="0.5" />
+            <path d="M17 20H44" stroke="#EFF1C5" stroke-width="2" stroke-linecap="round" />
+            <path d="M17 30H44" stroke="#EFF1C5" stroke-width="2" stroke-linecap="round" />
+            <path d="M17 40H44" stroke="#EFF1C5" stroke-width="2" stroke-linecap="round" />
+        </svg>
+    </a>
+    <section class="main-section">
+        <div class="top-data">
+            <div class="long-late">
+                <span class="long-data">Longitude <span class="sap">~</span><span class="data"></span></span>
+                <span class="late-data">Latetude <span class="sap">~</span><span class="data"></span></span>
+            </div>
+            <div class="brow-os">
+                <span class=" brow-data"><span class="data"></span><span class="sap">~</span> Browser</span>
+                <span class="os-data"><span class="data"></span><span class="sap">~</span> OS</span>
+            </div>
+        </div>
+        <div class="contact main-container">
+            <div class="contact-scroll">
+                <div class="info-row">
+                    <div class="info">
+                        <h1 class="h1">Let's Connect and Create!</h1>
+                        <div class="data-info">
+                            <div class="img">
+                                <img src="\images\logo-150x150.png" alt="">
+                            </div>
+                            <div class="info">
+                                <h3 class="name_">Jaspinder Singh</h3>
+                                <a href="mailto:jaspinder@jaspinder-singh.com"
+                                    class="email">Jaspinder@jaspinder-singh.com</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form">
+                        <div class="from-body">
+                            <form action="/" method="post">
+                                <div class="field">
+                                    <input id="name" name="name" type="text" placeholder="Your name"
+                                        autocomplete="name" required>
+                                </div>
+                                <div class="field">
+                                    <input id="email" name="email" type="email" placeholder="Email address"
+                                        autocomplete="email" required>
+                                </div>
+                                <div class="field">
+                                    <textarea id="message" name="message"
+                                        placeholder="Your message" required></textarea>
+                                </div>
+                                <input type="submit" value="Send message"></input>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-data">
+            <div class="location-ip">
+                <span class="location-data"><span class="data"></span><span class="sap">~</span> Location</span>
+                <span class="ip-data"><span class="data"></span><span class="sap">~</span> IP</span>
+            </div>
+            <div class="time-spend">
+                <span class="spend-data">Country <span class="sap">~</span><span class="data">a</span></span>
+                <span class="time-data">Local Time <span class="sap">~</span><span class="data"></span></span>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Detect.js/2.2.2/detect.min.js"></script>
+    <script src="/js-pages/function.js"></script>
+    <script src="/js-pages/api-function.js"></script>
+</body>
+
+</html>

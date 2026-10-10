@@ -10,10 +10,27 @@ app.set('view engine', 'ejs');
 // Public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Home
+
 app.get('/', (req, res) => {
   res.render('home');
 });
+app.get('/projects', (req, res) => {
+  res.render('projects');
+});
+app.get('/about', (req, res) => {
+  res.render('about');
+});
+app.get('/contact', (req, res) => {
+  res.render('contact');
+});
+app.post('/contact', (req, res) => {
+  res.render('/thanks');
+});
+
+app.use((req, res, next) => {
+  res.status(404).render("404");
+});
+
 
 app.listen(port, () => {
   console.log(`Example app listening on http://localhost:${port}`);

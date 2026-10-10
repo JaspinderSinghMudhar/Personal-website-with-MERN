@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="\images\cropped-logo-1.png">
+	<link rel="stylesheet" href="\js-pages\cap-new-style.css">
+	<title>About | Jaspinder Singh</title>
+	<meta property="og:image" content="/images/cropped-logo-1.png" alt="Jaspinder Singh" />
+</head>
+<style>
+
+	/* About */
+	.about.main-container {
+		display: flex;
+		height: inherit;
+	}
+	.about.main-container .info-row {
+		display: flex;
+		gap: 40px;
+		justify-content: center;
+		margin: auto;
+	}
+	.about.main-container .info-row .info {
+		width: 80%;
+	}
+	.about.main-container .info-row .info .h1 {
+		font-size: 64px;
+		font-weight: 700;
+		text-align: center;
+		margin: 20px auto 40px auto;
+	}
+	.about.main-container .info-row .info .para {
+		color: var(--color-hex);
+		font-size: 26px;
+		font-weight: 400;
+		line-height: 45px;
+		letter-spacing: 2.6px;
+		text-align: center;
+	}
+	.about.main-container .image {
+		position: absolute;
+		bottom: 0px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 500px;
+		z-index: -1;
+		opacity: 0.4;
+		filter: grayscale(1);
+	}
+
+	.other-info{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 20px;
+	}
+	.other-info svg:not(.js-resume svg){
+		width: 30px;
+		height: 30px;
+		color: #fff;
+	}
+
+	.js-resume{
+		border: 1px solid #fff;
+		padding: 5px 10px 5px 5px;
+		border-radius: 10px;
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		text-decoration: none;
+		color: #fff;
+		& svg{
+			width: 25px;
+			height: 25px;
+		}
+	}
+	@media (max-width: 1280px) {
+		.about.main-container .info-row .info .h1 {
+			font-size: 44px;
+			margin: 20px auto 20px auto;
+		}
+
+		.about.main-container .info-row .info .para {
+			font-size: 20px;
+			line-height: 38px;
+		}
+	}
+	@media (max-width:1137px) {
+		.about.main-container .info-row .info .para {
+			font-size: 18px;
+			line-height: 28px;
+		}
+		.about.main-container .info-row .info .h1 {
+			font-size: 30px;
+		}
+	}
+	@media (max-width: 585px) {
+		.about.main-container .info-row .info .h1 {
+			margin: 20px auto 10px auto;
+		}
+		.about.main-container .info-row .info .para {
+			font-size: 16px;
+			line-height: 24px;
+		}
+	}
+	@media (max-width: 490px) {
+		.about.main-container .info-row {
+			width: -webkit-fill-available;
+		}
+		.about.main-container .info-row .info {
+			width: 100%;
+		}
+		.about.main-container .info-row .info .para {
+			font-size: 16px;
+			line-height: 24px;
+			letter-spacing: 1.5px;
+		}
+		.other-info {
+			gap: 10px 20px;
+			flex-wrap: wrap;
+		}
+
+	}
+</style>
+<body>
+	<div class="colorization">
+		<div class="color-1" onclick="colorization(0)"></div>
+		<div class="color-2" onclick="colorization(1)"></div>
+		<div class="color-3" onclick="colorization(2)"></div>
+		<div class="color-4" onclick="colorization(3)"></div>
+	</div>
+	<div class="mouse_follower"></div>
+	<div class="main-menu" id="nav-pop">
+		<a href="/" class="home_">Home</a>
+		<a href="/projects" class="projects_">Projects</a>
+		<a href="/about" class="about_  active">About</a>
+		<a href="/contact" class="contact_">Contact</a>
+		<div class="colorization">
+			<div class="color-1" onclick="colorization(0)"></div>
+			<div class="color-2" onclick="colorization(1)"></div>
+			<div class="color-3" onclick="colorization(2)"></div>
+			<div class="color-4" onclick="colorization(3)"></div>
+		</div>
+	</div>
+	<a href="#0" class="close-nav"></a>
+	<a href="#nav-pop">
+		<svg class="mob-nav" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<rect width="60" height="60" rx="30" fill="#444444" fill-opacity="0.5"/>
+			<path d="M17 20H44" stroke="#EFF1C5" stroke-width="2" stroke-linecap="round"/>
+			<path d="M17 30H44" stroke="#EFF1C5" stroke-width="2" stroke-linecap="round"/>
+			<path d="M17 40H44" stroke="#EFF1C5" stroke-width="2" stroke-linecap="round"/>
+		</svg>
+	</a>
+	<section class="main-section">
+		<div class="top-data">
+			<div class="long-late">
+				<span class="long-data">Longitude <span class="sap">~</span><span class="data"></span></span>
+				<span class="late-data">Latetude <span class="sap">~</span><span class="data"></span></span>
+			</div>
+			<div class="brow-os">
+				<span class=" brow-data"><span class="data"></span><span class="sap">~</span> Browser</span>
+				<span class="os-data"><span class="data"></span><span class="sap">~</span> OS</span>
+			</div>
+		</div>
+		<div class="about main-container">
+			<div class="info-row">
+				<div class="info">
+					<h1 class="h1">About</h1>
+					<p class="para">Grateful to turn my passion into a profession, I thrive on tackling new challenges through code. Whether it's a straightforward solution or a more intricate one, the journey of problem-solving in the world of web development is always dynamic and never dull.
+					</p>
+					<div class="other-info">
+
+						<a class="js-github" href="https://github.com/JaspinderSinghMudhar" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+							<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+							</svg></a>
+						<a class='js-linkedin' href="https://www.linkedin.com/in/jaspinder-singh-5802a1262/" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+							<path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/>
+							</svg></a>
+						<a class="js-figma" href="https://www.figma.com/@jaspinder" target="_blank">
+							<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" clip-rule="evenodd" d="M8.66699 9.41667C7.24021 9.41667 6.08366 10.5731 6.08366 11.9998C6.08366 13.4266 7.24026 14.5832 8.66699 14.5832H11.2503V12.0519C11.2501 12.0346 11.25 12.0172 11.25 11.9998C11.25 11.9825 11.2501 11.9651 11.2503 11.9478V9.41667H8.66699ZM11.2503 7.91667H8.66699C7.24026 7.91667 6.08366 6.76007 6.08366 5.33333C6.08366 3.9066 7.24026 2.75 8.66699 2.75H11.2503V7.91667ZM12.7503 2.75V7.91663L15.333 7.9165C16.7597 7.9165 17.9167 6.76002 17.9167 5.33333C17.9167 3.9066 16.7601 2.75 15.3333 2.75H12.7503ZM15.3331 9.4165C13.9203 9.41664 12.7724 10.5509 12.7503 11.9584V12.0412C12.7724 13.4489 13.9204 14.5832 15.3333 14.5832C16.7601 14.5832 17.9167 13.4266 17.9167 11.9998C17.9167 10.5731 16.7598 9.41652 15.3331 9.4165ZM8.66699 16.0832C7.2403 16.0832 6.0835 17.24 6.0835 18.6668C6.0835 20.0936 7.24009 21.2502 8.66683 21.2502C10.0936 21.2502 11.2502 20.0936 11.2502 18.6668L11.2503 16.0832H8.66699Z"/>
+							</svg></a>
+						<a class="js-fiverr" href="https://www.fiverr.com/jaspindermudhar/design-and-develop-your-website-from-ui-to-fully-customized-wordpress-theme" target="_blank"><svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M16.4984 0.399902C7.62244 0.399902 0.398438 7.6239 0.398438 16.4999C0.398438 25.3759 7.62244 32.5999 16.4984 32.5999C25.3744 32.5999 32.5984 25.3759 32.5984 16.4999C32.5984 7.6239 25.3744 0.399902 16.4984 0.399902ZM22.7984 24.1999H18.5984V16.4999H15.7984V24.1999H11.5984V16.4999H8.79844V12.2999H11.6264C11.8854 8.8279 14.1044 6.6999 17.5484 6.6999H19.3194V10.8999H17.5484C16.9044 10.8999 16.0504 10.8999 15.8474 12.2999H22.7984V24.1999Z" fill="white"/>
+							</svg>
+						</a>
+						<a class="js-upwork" href="https://www.upwork.com/freelancers/~01a40efec16d8ea22c?mp_source=share" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" aria-label="Upwork" role="img" viewBox="0 0 512 512"><rect rx="15%" fill="CurrentColor"/><path fill="CurrentColor" d="M357.2,296.9c-17,0-33-7.2-47.4-18.9l3.5-16.6l0.1-.6c3.2-17.6,13.1-47.2,43.8-47.2c23,0,41.7,18.7,41.7,41.7S380.2,296.9,357.2,296.9L357.2,296.9z M357.2,171.4c-39.2,0-69.5,25.4-81.9,67.3c-18.8-28.3-33.1-62.2-41.4-90.8h-42.2v109.7c0,21.7-17.6,39.3-39.3,39.3s-39.3-17.6-39.3-39.3V147.8H71v109.7c0,44.9,36.5,81.8,81.4,81.8s81.4-36.9,81.4-81.8v-18.4c8.2,17.1,18.2,34.4,30.4,49.6l-25.8,121.4h43.1l18.7-88c16.4,10.5,35.2,17.1,56.8,17.1c46.2,0,83.8-37.8,83.8-84.1C440.9,209,403.4,171.4,357.2,171.4"/></svg>
+
+						</a>
+						<a class="js-resume" href="https://jaspinder-singh.com/wp-content/uploads/2024/02/new-plan-resume-jaspinder-singh_compressed.pdf" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+							<path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+							<path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+							</svg> Resume</a>
+					</div>
+				</div>
+				<div class="image">
+					<img src="\images\web-photo-upload.webp" alt="">
+				</div>
+			</div>
+		</div>
+		<div class="bottom-data">
+			<div class="location-ip">
+				<span class="location-data"><span class="data"></span><span class="sap">~</span> Location</span>
+				<span class="ip-data"><span class="data"></span><span class="sap">~</span> IP</span>
+			</div>
+			<div class="time-spend">
+				<span class="spend-data">Country <span class="sap">~</span><span class="data">a</span></span>
+				<span class="time-data">Local Time <span class="sap">~</span><span class="data"></span></span>
+			</div>
+		</div>
+	</section>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Detect.js/2.2.2/detect.min.js"></script>
+	<script src="/js-pages/function.js"></script>
+	<script src="/js-pages/api-function.js"></script>
+</body>
+
+</html>
