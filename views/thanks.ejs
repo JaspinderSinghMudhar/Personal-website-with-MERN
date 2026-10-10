@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/js-pages/new-style.css">
+  <title>Thank You | Jaspinder Singh</title>
+  <style>
+    :root {
+      --bg-rgb: 32, 32, 48;
+      --color-rgb: 239, 241, 197;
+      --color-hex: #eff1c5;
+    }
+
+    .thanks-content {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+    }
+
+    .thanks-content h1 {
+      margin: 0 0 16px;
+      color: var(--color-hex);
+      font-size: clamp(36px, 7vw, 64px);
+    }
+
+    .thanks-content h1 {
+      margin: 0 0 16px;
+      color: var(--color-hex);
+      font-size: clamp(26px, 7vw, 36px);
+    }
+
+    .thanks-content p {
+      margin: 0;
+      font-size: clamp(16px, 2.5vw, 22px);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="colorization">
+    <div class="color-1" onclick="colorization(0)"></div>
+    <div class="color-2" onclick="colorization(1)"></div>
+    <div class="color-3" onclick="colorization(2)"></div>
+    <div class="color-4" onclick="colorization(3)"></div>
+  </div>
+  <div class="mouse_follower"></div>
+  <div class="main-menu" id="nav-pop">
+    <a href="/" class="home_">Home</a>
+    <a href="/projects" class="projects_">Projects</a>
+    <a href="/about" class="about_">About</a>
+    <a href="/contact" class="contact_ active">Contact</a>
+    <div class="colorization">
+      <div class="color-1" onclick="colorization(0)"></div>
+      <div class="color-2" onclick="colorization(1)"></div>
+      <div class="color-3" onclick="colorization(2)"></div>
+      <div class="color-4" onclick="colorization(3)"></div>
+    </div>
+  </div>
+  <a href="#0" class="close-nav"></a>
+  <a href="#nav-pop">
+    <svg class="mob-nav" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="60" height="60" rx="30" fill="#444444" fill-opacity="0.5" />
+      <path d="M17 20H44" stroke="#EFF1C5" stroke-width="2" stroke-linecap="round" />
+      <path d="M17 30H44" stroke="#EFF1C5" stroke-width="2" stroke-linecap="round" />
+      <path d="M17 40H44" stroke="#EFF1C5" stroke-width="2" stroke-linecap="round" />
+    </svg>
+  </a>
+  <section class="main-section">
+    <div class="top-data">
+      <div class="long-late">
+        <span class="long-data">Longitude <span class="sap">~</span><span class="data"></span></span>
+        <span class="late-data">Latetude <span class="sap">~</span><span class="data"></span></span>
+      </div>
+      <div class="brow-os">
+        <span class=" brow-data"><span class="data"></span><span class="sap">~</span> Browser</span>
+        <span class="os-data"><span class="data"></span><span class="sap">~</span> OS</span>
+      </div>
+    </div>
+    <section>
+      <main class="thanks-content">
+        <h1>Thank you!</h1>
+        <% if (UserName) {%>
+        <p>
+          <b><%= UserName %>,</b> Your message has been received.
+        </p>
+        <% } %>
+      </main>
+    </section>
+    <div class="bottom-data">
+      <div class="location-ip">
+        <span class="location-data"><span class="data"></span><span class="sap">~</span> Location</span>
+        <span class="ip-data"><span class="data"></span><span class="sap">~</span> IP</span>
+      </div>
+      <div class="time-spend">
+        <span class="spend-data">Country <span class="sap">~</span><span class="data">a</span></span>
+        <span class="time-data">Local Time <span class="sap">~</span><span class="data"></span></span>
+      </div>
+    </div>
+  </section>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Detect.js/2.2.2/detect.min.js"></script>
+  <script src="/js-pages/function.js"></script>
+  <script src="/js-pages/api-function.js"></script>
+</body>
+
+</html>

@@ -10,6 +10,14 @@ app.set('view engine', 'ejs');
 // Public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Mongo DB
+const { MongoClient } = require('mongodb');
+const db_url = 'mongodb://localhost:27017'; // Set the local MongoDB connection URL.
+const client = new MongoClient(db_url);
+
+app.use(express.json()); // Parse incoming requests with JSON payloads.
+app.use(express.urlencoded({ extended: true })); 
+
 
 app.get('/', (req, res) => {
   res.render('home');
@@ -23,8 +31,18 @@ app.get('/about', (req, res) => {
 app.get('/contact', (req, res) => {
   res.render('contact');
 });
-app.post('/contact', (req, res) => {
-  res.render('/thanks');
+
+// Use this if you need a direct visit from the user.
+// app.get('/thanks', (req, res) => {
+//   res.render('thanks', { UserName: '' });
+// });
+
+app.post('/contact', async (req, res) => {
+  await client.connect(); // Connect to the MongoDB server.
+    const db = client.db('Portfolio_recreated'); // Select the Portfolio_recreated database.
+    const post_data = db.collection('form'); // Select the form collection.
+    await post_data.insertOne(req.body); // Insert the submitted form data into the collection.
+    res.render('thanks', { UserName: req.body.name }); // Render the thank-you page.
 });
 
 app.use((req, res, next) => {
