@@ -85,8 +85,6 @@ app.get('/:slug', async (req, res) => {
     return res.status(404).render('404', getRequestGeo(req));
   } else {
     const project = await post_data.findOne({ slug: slug });
-    console.log(project)
-
     const geo = geoip.lookup(ip);
     return res.render('project', {project, geo, ip: req.clientIp });
   }

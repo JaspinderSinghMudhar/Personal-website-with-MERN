@@ -1,0 +1,383 @@
+NOTE FOR index.js
+=================
+
+This note explains the current index.js in everyday language. The code below is copied as it currently exists; it is included for reference and is not changed by this note.
+
+
+FULL COPY OF index.js
+=====================
+
+// Express Req
+const express = require('express');
+const path = require('path');
+const app = express();
+const port = 3000;
+
+// Ejs Req
+app.set('view engine', 'ejs');
+
+// Public folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Mongo DB
+const { MongoClient } = require('mongodb');
+const { features } = require('process');
+const db_url = 'mongodb://localhost:27017'; // Set the local MongoDB connection URL.
+const client = new MongoClient(db_url);
+
+
+// Converting Post Data into Json
+app.use(express.json()); // Parse incoming requests with JSON payloads.
+app.use(express.urlencoded({ extended: true }));
+
+// Adding IP Getting Package
+const requestIp = require('request-ip');
+// Enable the request-ip middleware globally
+app.use(requestIp.mw());
+
+// Getting GEO Deta
+const geoip = require('geoip-lite');
+// Temp variable
+const ip = "223.233.72.113";
+
+// Build the data needed by the 404 page for the current visitor.
+const getRequestGeo = (req) => {
+  // A local/private IP may not have a geolocation entry, so check the result first.
+  const geo = req.clientIp ? geoip.lookup(req.clientIp) : null;
+
+  // The 404 page reads these fields; use placeholders if lookup returned no location.
+  return {
+    geo: geo || { ll: ['-', '-'], city: '-', country: '-' },
+    ip: req.clientIp || '-'
+  };
+};
+
+app.get('/', (req, res) => {
+  // const geo = geoip.lookup(req.clientIp);
+  const geo = geoip.lookup(ip);
+  res.render('home', { geo, ip: req.clientIp });
+});
+
+
+app.get('/projects', async (req, res) => {
+  await client.connect();
+  const db = client.db('Portfolio_recreated');
+  const post_data = db.collection('projects');
+  const projects = (await post_data.find({}, { _id: 0, image: 1, slug: 1 }).toArray());
+  const geo = geoip.lookup(ip);
+  res.render('projects', { projects,geo, ip: req.clientIp });
+});
+
+
+app.get('/about', (req, res) => {
+  const geo = geoip.lookup(ip);
+  res.render('about', { geo, ip: req.clientIp });
+});
+
+
+app.get('/contact', (req, res) => {
+  const geo = geoip.lookup(ip);
+  res.render('contact', { geo, ip: req.clientIp });
+});
+
+
+// Dynamic project post page using a slug parameter
+app.get('/:slug', async (req, res) => {
+  await client.connect();
+  const db = client.db('Portfolio_recreated');
+  const post_data = db.collection('projects');
+  const post_slug = await post_data.find({}, { _id: 0, slug: 1 }).toArray();
+  const { slug } = req.params;
+  const post = post_slug.find(p => p.slug === slug);
+  if (!post) {
+    // Unknown project slugs are handled here, so pass the 404 page its expected data.
+    return res.status(404).render('404', getRequestGeo(req));
+  } else {
+    const project = await post_data.findOne({ slug: slug });
+    console.log(project)
+
+    const geo = geoip.lookup(ip);
+    return res.render('project', {project, geo, ip: req.clientIp });
+  }
+})
+
+
+
+app.post('/contact', async (req, res) => {
+  await client.connect(); // Connect to the MongoDB server.
+  const db = client.db('Portfolio_recreated'); // Select the Portfolio_recreated database.
+  const post_data = db.collection('form'); // Select the form collection.
+  await post_data.insertOne(req.body); // Insert the submitted form data into the collection.
+  const geo = geoip.lookup(ip);
+  res.render('thanks', { UserName: req.body.name, geo, ip: req.clientIp }); // Render the thank-you page.
+});
+
+// Catch any other URL that did not match a route and pass the same data to the 404 page.
+app.use((req, res) => {
+  res.status(404).render('404', getRequestGeo(req));
+});
+
+
+app.listen(port, () => {
+  console.log(`Example app listening on http://localhost:${port}`);
+});
+
+
+PLAIN-LANGUAGE, LINE-BY-LINE EXPLANATION
+========================================
+
+The line numbers below refer to the code copy above. Blank lines are only spacing; they do not run or change anything.
+
+Lines 1-5: Start the Express web server
+---------------------------------------
+
+Line 1: A comment for a person reading the file. JavaScript ignores it.
+
+Line 2: Loads the Express package so this file can create a web server and define website routes.
+
+Line 3: Loads Node's path helper. It safely joins folder names in a way that works on the current operating system.
+
+Line 4: Creates the Express application. The app is used to set up routes and middleware.
+
+Line 5: Sets the server's port to 3000. Locally, the site can be visited at http://localhost:3000.
+
+Lines 7-8: Tell Express to use EJS
+----------------------------------
+
+Line 7: A comment labeling the EJS setup.
+
+Line 8: Selects EJS as the view/template engine. Calls such as res.render('home') look for an EJS template in the views folder and turn it into HTML.
+
+Lines 10-11: Serve public files
+-------------------------------
+
+Line 10: A comment identifying the static public-file setup.
+
+Line 11: Makes files inside the project's public folder available to browsers. For example, public/images/logo.png is requested at /images/logo.png, not /public/images/logo.png. __dirname means the folder containing this index.js file.
+
+Lines 13-18: Prepare MongoDB
+---------------------------
+
+Line 13: A comment labeling the database setup.
+
+Line 14: Loads MongoClient, the MongoDB driver's class for connecting to MongoDB.
+
+Line 15: Loads a value named features from Node's process module. It is not used elsewhere in this file, so currently it has no effect on the site.
+
+Line 16: Stores the MongoDB connection address. localhost:27017 means a MongoDB server running on this same computer using MongoDB's usual port.
+
+Line 17: Creates a MongoDB client configured with that connection address. The connection is established later when client.connect() is called.
+
+Lines 20-22: Read form data sent to the server
+----------------------------------------------
+
+Line 20: A comment saying the next middleware reads submitted data.
+
+Line 21: Adds middleware that parses JSON request bodies and makes the parsed values available through req.body.
+
+Line 22: Adds middleware for regular HTML form submissions, which are URL-encoded. The extended option allows richer nested form values to be parsed.
+
+Lines 24-27: Detect the request IP address
+------------------------------------------
+
+Line 24: A comment labeling the IP package setup.
+
+Line 25: Loads the request-ip package.
+
+Line 26: A comment describing the middleware that follows.
+
+Line 27: Adds request-ip middleware to the whole app. It sets req.clientIp so later route handlers can access the request's client IP.
+
+Lines 29-32: Set up IP geolocation
+----------------------------------
+
+Line 29: A comment labeling the geolocation setup.
+
+Line 30: Loads geoip-lite, a package that looks up approximate location details for an IP address using its local data.
+
+Line 31: A comment marking the next value as temporary.
+
+Line 32: Saves a fixed IP address. The standard page routes below look up this fixed address, so their displayed geo location is for this address, not necessarily the current visitor. The 404 helper instead looks up req.clientIp.
+
+Lines 34-44: Prepare the data needed by the 404 page
+----------------------------------------------------
+
+Line 34: Explains the purpose of the helper function.
+
+Line 35: Defines a function called getRequestGeo. It accepts the Express request object and returns values that the 404 template needs.
+
+Line 36: A comment explaining that some addresses, such as localhost/private addresses, cannot be located.
+
+Line 37: If req.clientIp exists, look up its location. If there is no client IP, set geo to null. geoip.lookup can also return null if it cannot find that address.
+
+Line 38: Blank line for readability.
+
+Line 39: A comment explaining why there are fallback values.
+
+Line 40: Starts an object that will be returned. The geo property uses the found location if available; otherwise it uses a placeholder object with latitude/longitude (ll), city, and country fields.
+
+Line 41: Sets the ip property to the detected IP address, or a dash if there isn't one. The names geo and ip are the names expected by the EJS page.
+
+Line 42: Closes the returned object.
+
+Line 43: Closes the helper function.
+
+Line 44: Blank line before defining routes.
+
+Lines 46-50: Show the home page
+------------------------------
+
+Line 46: Defines a GET route for the site root, such as http://localhost:3000/.
+
+Line 47: A commented-out alternative. It would look up the actual request IP, but because it starts with //, it does not run.
+
+Line 48: Looks up the hard-coded IP from line 32. This means the home page's geo value is based on that fixed address.
+
+Line 49: Renders views/home.ejs and passes it two template values: geo for location information and ip for the visitor IP. These two IP-derived values may not refer to the same address because geo uses the fixed IP while ip uses req.clientIp.
+
+Line 50: Closes the home route.
+
+Lines 53-60: Load the project list
+---------------------------------
+
+Line 53: Defines the GET route for /projects. It is async because it waits for database operations.
+
+Line 54: Connects the MongoDB client. await pauses this route until the connection is ready.
+
+Line 55: Selects the Portfolio_recreated database.
+
+Line 56: Selects the projects collection inside that database.
+
+Line 57: Finds all project documents. The projection requests only image and slug, and excludes the default _id field. toArray() reads the cursor and returns the matching documents as an array.
+
+Line 58: Looks up location for the fixed IP address.
+
+Line 59: Renders views/projects.ejs and passes it the projects, geo, and visitor IP. The formatting has no space after the comma between projects and geo, but JavaScript still accepts it.
+
+Line 60: Closes the /projects route.
+
+Lines 63-66: Load the about page
+-------------------------------
+
+Line 63: Defines the GET route for /about.
+
+Line 64: Looks up the fixed IP's location.
+
+Line 65: Renders views/about.ejs and passes its location and the actual request IP.
+
+Line 66: Closes the /about route.
+
+Line 67-68: Blank lines separating routes.
+
+Lines 69-72: Load the contact page
+----------------------------------
+
+Line 69: Defines the GET route for /contact.
+
+Line 70: Looks up the fixed IP's location.
+
+Line 71: Renders views/contact.ejs and passes its location and the actual request IP.
+
+Line 72: Closes the /contact route.
+
+Line 73-74: Blank lines separating routes.
+
+Lines 75-93: Find and display one project by slug
+-------------------------------------------------
+
+Line 75: A comment describing the dynamic route. A slug is the readable identifier in a URL, such as career-page-project.
+
+Line 76: Defines a GET route matching any one-part path that reaches this point, such as /career-page-project. Express puts that path part in req.params.slug.
+
+Line 77: Connects to MongoDB if needed and waits until the connection is ready.
+
+Line 78: Selects the Portfolio_recreated database.
+
+Line 79: Selects the projects collection.
+
+Line 80: Fetches the slug field from every project, excluding each MongoDB _id, and turns the results into an array.
+
+Line 81: Reads the slug from the URL parameters.
+
+Line 82: Searches the fetched array in JavaScript for a project whose slug exactly matches the URL slug.
+
+Line 83: Starts the if condition: it checks whether no matching slug was found.
+
+Line 84: A comment explaining why the 404 page is given data.
+
+Line 85: Responds with HTTP status 404 and renders views/404.ejs. getRequestGeo(req) supplies the current IP and location, or safe placeholder location values.
+
+Line 86: The else branch runs when the slug did match a project.
+
+Line 87: Queries MongoDB for the full project document with that slug.
+
+Line 88: Writes the project document to the server terminal for debugging. This does not display it in the browser.
+
+Line 89: Blank line for readability.
+
+Line 90: Looks up location using the fixed IP address.
+
+Line 91: Renders views/project.ejs with the project document, location, and request IP.
+
+Line 92: Closes the else branch.
+
+Line 93: Closes the route handler. There is no semicolon after this closing brace; JavaScript allows this syntax.
+
+Lines 94-96: Blank lines separating route groups.
+
+Lines 97-104: Save contact form submissions and show thanks
+-----------------------------------------------------------
+
+Line 97: Defines a POST route for /contact. A form configured to POST to /contact will be handled here.
+
+Line 98: Connects to MongoDB and waits for the connection.
+
+Line 99: Selects the Portfolio_recreated database.
+
+Line 100: Selects the form collection where submitted form data will be stored.
+
+Line 101: Inserts all parsed form fields from req.body as a new MongoDB document.
+
+Line 102: Looks up location for the fixed IP.
+
+Line 103: Renders views/thanks.ejs after saving the form. It passes the submitted name as UserName, plus geo and ip for the page's location display.
+
+Line 104: Closes the POST route.
+
+Line 105: Blank line.
+
+Line 106: A comment describing the final fallback handler.
+
+Lines 107-109: Handle all remaining unmatched URLs
+--------------------------------------------------
+
+Line 107: Adds middleware after the other routes. If none of the earlier routes sent a response, Express reaches this handler.
+
+Line 108: Responds with HTTP 404 and renders views/404.ejs. It passes the same visitor-specific IP/location data as the unknown-project route.
+
+Line 109: Closes the middleware function.
+
+Lines 110-111: Blank lines before the server starts.
+
+Lines 112-114: Start listening for requests
+-------------------------------------------
+
+Line 112: Starts the Express server on port 3000 and gives it a callback to run once listening starts.
+
+Line 113: Prints the local server address in the terminal, confirming which port the app is listening on.
+
+Line 114: Closes the listen callback and starts the server.
+
+
+IMPORTANT NOTES ABOUT THE CURRENT CODE
+======================================
+
+1. The fixed IP on line 32 is only a temporary/testing value. The normal page routes use its location but show req.clientIp separately. This can display a location and IP that do not belong together.
+
+2. The 404 helper looks up the current request IP and supplies fallback values if there is no geolocation result. This is why it is safer for the 404 page than directly using geoip.lookup(ip).
+
+3. The project detail route first downloads every project's slug and searches the list in JavaScript, then performs another database query for the selected project. It works, but a direct MongoDB findOne({ slug }) can do the matching in one database query.
+
+4. The import of features from process on line 15 is not used in this file.
+
+5. Database operations are awaited, but this file does not wrap route handlers in error handling. If MongoDB is unavailable or a query fails, the request can fail. This note does not change the source code.
