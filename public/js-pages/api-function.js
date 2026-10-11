@@ -106,7 +106,7 @@ function body_design(){
 	document.querySelector('.late-data .data').innerHTML = api_data.location.latitude;
 }
 // Called for testing only
-body_design();
+// body_design();
 
 // var xhr = new XMLHttpRequest();
 // xhr.onreadystatechange = function() {
