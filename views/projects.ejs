@@ -234,9 +234,9 @@
             </h1>
             <div class="projects_display">
                 <div class="project_scroll">
-                     <% for (let img of feature_img ){%>
-                    <a href="#" class="pro-card">
-                        <img src=" <%= img %>" alt="">
+                     <% for (let project of projects ){%>
+                    <a href="<%= project['slug'] %>" class="pro-card">
+                        <img src=" <%= project['image'] %>" alt="">
                     </a>
                     <% }%>
                 </div>

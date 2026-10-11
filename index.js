@@ -23,30 +23,45 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
   res.render('home');
 });
+
+
 app.get('/projects', async (req, res) => {
   await client.connect();
   const db = client.db('Portfolio_recreated');
   const post_data = db.collection('projects');
-  // get all the data and then map all the images and create new array of image
-  // const result = await post_data.find().toArray();
-  //   const image_list = result.map(element => {
-  //   return element['image']
-  // });
-
-  // Getting only image for fast result
-  // const image_list = await post_data.find({}, {projection: {_id: 0,image: 1}}).toArray();
-  const image_list = await post_data.find({}, {_id: 0,image: 1}).toArray();
-    const result = image_list.map(element => {
-    return element['image']
-  });
-  res.render('projects', { feature_img: result });
+  const projects = (await post_data.find({}, { _id: 0, image: 1, slug: 1}).toArray());
+  res.render('projects', {projects});
 });
+
+
 app.get('/about', (req, res) => {
   res.render('about');
 });
+
+
 app.get('/contact', (req, res) => {
   res.render('contact');
 });
+
+
+// Dynamic blog post page using a slug parameter
+app.get('/:slug', async (req, res) => {
+  await client.connect();
+  const db = client.db('Portfolio_recreated');
+  const post_data = db.collection('projects');
+  const post_slug = await post_data.find({}, { _id: 0, slug: 1 }).toArray();
+  const { slug } = req.params;
+  const post = post_slug.find(p => p.slug === slug);
+  if (!post) {
+    return res.status(404).render('404');
+  } else {
+    // const project = await post_data.findOne({}, { _id: 0, slug:`${slug}`});
+    const project = await post_data.findOne({slug: slug});
+    console.log(project)
+    return res.render('project', {project});
+  }
+})
+
 
 // Use this if you need a direct visit from the user.
 // app.get('/thanks', (req, res) => {
